@@ -1,6 +1,6 @@
 var p,ep;
-var Ep = [];
-var gameState = 0;
+var Ep;
+var gameState = 1;
 var score;
 var pimg;
 function preload(){
@@ -11,6 +11,7 @@ function setup(){
  p = createSprite(10,703.25,20,20);
  p.addAnimation("particle",pimg);
  p.scale = 0.15;
+ Ep = new Group();
 }
 function draw(){
  background(rgb(0,0,0));
@@ -18,6 +19,7 @@ function draw(){
   score = Math.round(frameCount/10);
  fill(rgb(255,255,255));
  textSize(32);
+ textFont("consolas");
  text("Score: "+ score, 500,50);
  //p.x+=4;
  camera.position.x = p.position.x+500;
@@ -28,14 +30,15 @@ function draw(){
   p.position.y+=7;
  }
  spawnParticles();
- /*if(ep.position.x + p.position.x = ){
+ if(Ep.isTouching(p)){
     gameState = 0;
- }*/}
+ }}
  if (gameState === 0){
-  score = 0;
-  //Ep.destroyEach(); 
-  gameState = 1;
-  
+  Ep.destroyEach(); 
+  p.destroy();
+  fill(rgb(random(0,255),random(0,255),random(0,255)));
+  textSize(50);
+  text("Your score is "+score+". Congratulations!",0,displayHeight/2);
  } 
  drawSprites();
 }
@@ -45,6 +48,6 @@ function spawnParticles(){
   ep.y = Math.round(random(00,700));
   ep.velocityX = -6;
   ep.shapeColor = rgb(random(50,255),random(50,255),random(50,255))
-  Ep.push(ep);
+  Ep.add(ep);
  }
 }
